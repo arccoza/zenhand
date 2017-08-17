@@ -11,7 +11,7 @@ function fromStyleStr(str) {
   .reduce((acc, cur) => ([k, v] = cur.split(':'), {...acc, [k]: v}), {})
 }
 
-function shorthand(tag) {
+function zenhand(tag) {
   var ret = {tag: 'div', attrs: {class: [], style: ''}}
 
   tag = tag.replace(/(?:[#\.\[]|^).*?(?=$|[#\.\[])|\]/g, m => {
