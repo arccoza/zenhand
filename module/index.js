@@ -38,3 +38,5 @@ function zenhand(tag) {
 
   return ret
 }
+
+export {toStyleStr, fromStyleStr, zenhand}
