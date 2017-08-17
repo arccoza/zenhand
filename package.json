@@ -13,5 +13,8 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "taskr": "^1.1.0"
+  },
+  "dependencies": {
+    "fly-rename": "^0.1.1"
   }
 }
