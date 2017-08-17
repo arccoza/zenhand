@@ -5,5 +5,13 @@
   "main": "common/index.js",
   "repository": "github.com/arccoza/zenhand",
   "author": "Adrien <adrien@arccoza.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@taskr/babel": "^1.1.0",
+    "@taskr/clear": "^1.1.0",
+    "babel-core": "^6.25.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "taskr": "^1.1.0"
+  }
 }
