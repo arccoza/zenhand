@@ -4,12 +4,12 @@ Zenhand parses a shorthand string representing an HTML element, and returns an o
 ## Example
 ```js
 var {zenhand} = require('zenhand')
-// import {zenhand} from 'zenhand/module'  // If you're using es modules.
+// import {zenhand} from 'zenhand'  // If you're using es modules.
 
 var obj = zenhand('div#ex.exmpl.info[style=background:red;color:black][data-name=temp]')
 console.log(obj)
 ```
-**output:**
+__output:__
 ```js
 { tag: 'div',
   attrs: 
