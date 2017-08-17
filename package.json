@@ -1,0 +1,9 @@
+{
+  "name": "zenhand",
+  "version": "1.0.0",
+  "description": "Turn a shorthand HTML string into an HTML object.",
+  "main": "common/index.js",
+  "repository": "github.com/arccoza/zenhand",
+  "author": "Adrien <adrien@arccoza.com>",
+  "license": "MIT"
+}
