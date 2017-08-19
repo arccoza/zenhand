@@ -25,107 +25,115 @@ function fromStyleStr(str) {
 function zenhand(tag) {
   var obj = {tag: 'div', attrs: {class: [], style: ''}}
 
-  // tag = tag.replace(/(?:[#\.\[]|^).*?(?=$|[#\.\[])|\]/g, m => {
-  //   switch (m[0]) {
-  //     case '#':
-  //       obj.attrs.id = m.slice(1)
-  //       break
-  //     case '.':
-  //       obj.attrs.class.push(m.slice(1))
-  //       break
-  //     case '[':
-  //       var [key, val] = m.slice(1, -1).split('=')
-
-  //       // Process style string into obj.
-  //       if (key.toLowerCase() == 'style')
-  //         val = fromStyleStr(val)
-
-  //       obj.attrs[key] = val || true
-  //       break
-  //     default:
-  //       obj.tag = m
-  //   }
-  // })
-
-  var ref = obj
-  var refb
-  var key
-  var keyb
-  var val
-  var eqi
-  var mark = 0
-  var collect = false
-
-  for( var i = 0; i < tag.length; i++) {
-    // ref = obj
-    switch (tag[i]) {
+  tag = tag.replace(/(?:[#\.\[]|^).*?(?=$|[#\.\[])|\]/g, m => {
+    switch (m[0]) {
+      case '#':
+        obj.attrs.id = m.slice(1)
+        break
       case '.':
-        collect = true
-        refb = ref
-        keyb = key
-        ref = obj['attrs']['class']
-        key = ref.length
-        ++i
+        obj.attrs.class.push(m.slice(1))
         break
       case '[':
-        collect = true
-        refb = ref
-        keyb = key
-        ref = obj['attrs']
-        key = null
-        ++i
-        break
-      case '#':
-        collect = true
-        refb = ref
-        keyb = key
-        ref = obj['attrs']
-        key = 'id'
-        ++i
+        var key = m.slice(1, -1), val = true
+        var eqi = key.indexOf('=')
+        if (eqi != -1)
+          [key, val] = [key.substring(0, eqi), key.substring(eqi + 1, key.length)]
+        // var [key, val] = m.slice(1, -1).split('=')
+
+        // Process style string into obj.
+        if (key.toLowerCase() == 'style')
+          val = fromStyleStr(val)
+
+        obj.attrs[key] = val || true
         break
       default:
-        if (i == 0) {
-          ref = obj
-          key = 'tag'
-          continue
-        }
-
-      if (collect) {
-        if (keyb === null) {
-          val = tag.substring(mark, i - 3)
-          eqi = val.indexOf('=')
-          if (eqi != -1) {
-            [keyb, val] = [val.substring(0, eqi), val.substring(eqi + 1, val.length)]
-            if (keyb == 'style')
-              val = fromStyleStr(val)
-          }
-        }
-        else
-          val = tag.substring(mark, i - 2)
-
-        refb[keyb] = val
-
-        mark = i - 1
-        collect = false
-      }
+        obj.tag = m
     }
-  }
+  })
 
-  refb = ref
-  keyb = key
-  if (keyb === null) {
-    val = tag.substring(mark, i - 1)
-    eqi = val.indexOf('=')
-    if (eqi != -1) {
-      [keyb, val] = [val.substring(0, eqi), val.substring(eqi + 1, val.length)]
-      if (keyb == 'style')
-        val = fromStyleStr(val)
-    }
-  }
-  else
-    val = tag.substring(mark, i)
 
-  refb[keyb] = val
+
+  // var ref = obj
+  // var refb
+  // var key
+  // var keyb
+  // var val
+  // var eqi
+  // var mark = 0
+  // var collect = false
+
+  // for( var i = 0; i < tag.length; i++) {
+  //   // ref = obj
+  //   switch (tag[i]) {
+  //     case '.':
+  //       collect = true
+  //       refb = ref
+  //       keyb = key
+  //       ref = obj['attrs']['class']
+  //       key = ref.length
+  //       ++i
+  //       break
+  //     case '[':
+  //       collect = true
+  //       refb = ref
+  //       keyb = key
+  //       ref = obj['attrs']
+  //       key = null
+  //       ++i
+  //       break
+  //     case '#':
+  //       collect = true
+  //       refb = ref
+  //       keyb = key
+  //       ref = obj['attrs']
+  //       key = 'id'
+  //       ++i
+  //       break
+  //     default:
+  //       if (i == 0) {
+  //         ref = obj
+  //         key = 'tag'
+  //         continue
+  //       }
+
+  //     if (collect) {
+  //       if (keyb === null) {
+  //         val = tag.substring(mark, i - 3)
+  //         eqi = val.indexOf('=')
+  //         if (eqi != -1) {
+  //           [keyb, val] = [val.substring(0, eqi), val.substring(eqi + 1, val.length)]
+  //           if (keyb == 'style')
+  //             val = fromStyleStr(val)
+  //         }
+  //       }
+  //       else
+  //         val = tag.substring(mark, i - 2)
+
+  //       refb[keyb] = val
+
+  //       mark = i - 1
+  //       collect = false
+  //     }
+  //   }
+  // }
+
+  // refb = ref
+  // keyb = key
+  // if (keyb === null) {
+  //   val = tag.substring(mark, i - 1)
+  //   eqi = val.indexOf('=')
+  //   if (eqi != -1) {
+  //     [keyb, val] = [val.substring(0, eqi), val.substring(eqi + 1, val.length)]
+  //     if (keyb == 'style')
+  //       val = fromStyleStr(val)
+  //   }
+  // }
+  // else
+  //   val = tag.substring(mark, i)
+
+  // refb[keyb] = val
+
+
 
   // var keys = []
 
@@ -177,7 +185,7 @@ function zenhand(tag) {
   return obj
 }
 
-export {toStyleStr, fromStyleStr, zenhand}
+// export {toStyleStr, fromStyleStr, zenhand}
 
 
-// print(zenhand('test#id.class[key=value].class2[style=color:red]'))
+print(zenhand('test#id.class[key=value].class2[style=color:red]'))
