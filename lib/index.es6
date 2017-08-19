@@ -26,7 +26,42 @@ function fromStyleStr(str) {
 function zenhand(tag) {
   var obj = {tag: 'div', attrs: {class: [], style: ''}}
 
-  tag = tag.replace(/(?:[#\.\[]|^).*?(?=$|[#\.\[])|\]/g, m => {
+  // tag = tag.replace(/(?:[#\.\[]|^).*?(?=$|[#\.\[])|\]/g, m => {
+  //   switch (m[0]) {
+  //     case '#':
+  //       obj.attrs.id = m.slice(1)
+  //       break
+  //     case '.':
+  //       obj.attrs.class.push(m.slice(1))
+  //       break
+  //     case '[':
+  //       var key = m.slice(1, -1), val = true
+  //       var eqi = key.indexOf('=')
+  //       if (eqi != -1)
+  //         [key, val] = [key.substring(0, eqi), key.substring(eqi + 1, key.length)]
+
+  //       // Process style string into obj.
+  //       if (key.toLowerCase() == 'style')
+  //         val = fromStyleStr(val)
+
+  //       obj.attrs[key] = val || true
+  //       break
+  //     default:
+  //       obj.tag = m
+  //   }
+  // })
+
+
+  var re = /(?:[#\.\[]|^).*?(?=$|[#\.\[])|\]/g, m
+
+  while ((m = re.exec(tag)) !== null) {
+    // This is necessary to avoid infinite loops with zero-width matches
+    if (m.index === re.lastIndex) {
+        re.lastIndex++;
+    }
+
+    // print(m[0])
+    m = m[0]
     switch (m[0]) {
       case '#':
         obj.attrs.id = m.slice(1)
@@ -49,7 +84,7 @@ function zenhand(tag) {
       default:
         obj.tag = m
     }
-  })
+  }
 
 
 
