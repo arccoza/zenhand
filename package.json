@@ -22,7 +22,9 @@
     "babel-core": "^6.25.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
-    "taskr": "^1.1.0",
-    "fly-rename": "^0.1.1"
-  }
+    "babel-preset-env": "^1.6.1",
+    "fly-rename": "^0.1.1",
+    "taskr": "^1.1.0"
+  },
+  "dependencies": {}
 }
