@@ -10,14 +10,12 @@ function toStyleStr(obj) {
 function fromStyleStr(str) {
   var k, v
   var obj = {}
-  var cur, eqi
+  var cur
+  var pairs = str.split(/\s*;\s*/)
 
-  for (cur of str.split(/\s*;\s*/)) {
-    eqi = cur.indexOf(':')
-    if (cur && eqi != -1) {
-      [k, v] = [cur.substring(0, eqi), cur.substring(eqi + 1, cur.length)]
-      obj[k] = v
-    }
+  for (var i = 0; cur = pairs[i++];) {
+    [k, v] = cur.split(/\s*:\s*/, 2)
+    obj[k] = v
   }
 
   return obj
@@ -62,6 +60,3 @@ function zenhand(tag) {
 }
 
 export {toStyleStr, fromStyleStr, zenhand}
-
-
-// print(zenhand('test#id.class[key=value].class2[style=color:red]'))
