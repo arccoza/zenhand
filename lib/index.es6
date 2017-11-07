@@ -11,12 +11,10 @@ function toStyleStr(obj) {
 }
 
 function fromStyleStr(str) {
-  var k, v
   var obj = {}
-  var cur
   var pairs = str.split(/\s*;\s*/)
 
-  for (var i = 0; cur = pairs[i++];) {
+  for (var i = 0, k, v, cur; cur = pairs[i++];) {
     [k, v] = cur.split(/\s*:\s*/, 2)
     obj[k] = v
   }
