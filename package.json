@@ -18,7 +18,7 @@
   ],
   "scripts": {
     "build": "node taskfile.js",
-    "test": "./run-tests",
+    "test": "./run-test",
     "bench": "./run-bench"
   },
   "devDependencies": {
