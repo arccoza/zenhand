@@ -10,7 +10,7 @@ exports.clean = function*(task) {
     yield task.clear(['./lib/**/*.js']);
 }
 
-exports.esm2cjs = function*(task) {
+exports.es2js = function*(task) {
     yield task
       .source(src.module)
       .babel()
@@ -35,5 +35,5 @@ if (require && require.main === module) {
     ]
   })
 
-  taskr.start('esm2cjs')
+  taskr.start('es2js')
 }
