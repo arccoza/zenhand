@@ -16,6 +16,11 @@
     "HTML",
     "AST"
   ],
+  "scripts": {
+    "build": "node taskfile.js",
+    "test": "./run-tests",
+    "bench": "./run-bench"
+  },
   "devDependencies": {
     "@taskr/babel": "^1.1.0",
     "@taskr/clear": "^1.1.0",
