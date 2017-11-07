@@ -1,6 +1,6 @@
 {
   "name": "zenhand",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Turn a shorthand HTML string into an HTML object.",
   "main": "lib/index",
   "repository": "https://github.com/arccoza/zenhand",
