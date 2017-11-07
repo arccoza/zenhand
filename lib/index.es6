@@ -2,9 +2,12 @@ var print = console.log.bind(console)
 
 
 function toStyleStr(obj) {
-  var ks = Object.keys(obj), vs = Object.values(obj)
+  var acc = []
 
-  return ks.map((e, i) => [e, vs[i]].join(':')).join('; ')
+  for (var keys = Object.keys(obj), i = 0, k, v; k = keys[i++], v = obj[k], k;)
+    acc.push(`${k}:${v};`)
+
+  return acc.join(' ')
 }
 
 function fromStyleStr(str) {
