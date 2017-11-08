@@ -3,7 +3,7 @@ const print = console.log.bind(console)
 
 const env = process.env.NODE_ENV
 const src = {
-  module: 'lib/**/*.es6'
+  es: 'lib/**/*.es6'
 }
 
 exports.clean = function*(task) {
@@ -12,7 +12,7 @@ exports.clean = function*(task) {
 
 exports.es2js = function*(task) {
     yield task
-      .source(src.module)
+      .source(src.es)
       .babel()
       .rename((file) => {
         file.dirname = ''
