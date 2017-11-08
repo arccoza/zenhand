@@ -39,9 +39,9 @@ function fromStyleStr(str, caseFrom, caseTo) {
   return obj
 }
 
-function zenhand(tag) {
-  var obj = {tag: 'div', attrs: {class: [], style: ''}}
-  var re = /(?:[#\.\[]|^).*?(?=$|[#\.\[])|\]/g, m
+function zenhand(tag, {changeStyleCase=true}={}) {
+  let obj = {tag: 'div', attrs: {class: [], style: ''}}
+  let re = /(?:[#\.\[]|^).*?(?=$|[#\.\[])|\]/g, m
 
   while ((m = re.exec(tag)) !== null) {
     // This is necessary to avoid infinite loops with zero-width matches
@@ -64,8 +64,11 @@ function zenhand(tag) {
           [key, val] = [key.substring(0, eqi), key.substring(eqi + 1, key.length)]
 
         // Process style string into obj.
-        if (key.toLowerCase() == 'style')
-          val = fromStyleStr(val)
+        if (key.toLowerCase() == 'style') {
+          if (changeStyleCase)
+            var caseFrom = 'kebab', caseTo = 'camel'
+          val = fromStyleStr(val, caseFrom, caseTo)
+        }
 
         obj.attrs[key] = val || true
         break
