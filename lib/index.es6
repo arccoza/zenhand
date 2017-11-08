@@ -3,8 +3,8 @@ var print = console.log.bind(console)
 
 var cases = {
   camel: [/[a-z][A-Z]/, (a, b) => a.toLowerCase() + b.toUpperCase()],
-  kebab: [/.-./, (a, b) => a + '-' + b],
-  snake: [/._./, (a, b) => a + '_' + b],
+  kebab: [/.-./, (a, b) => a + '-' + b.toLowerCase()],
+  snake: [/._./, (a, b) => a + '_' + b.toLowerCase()],
 }
 
 function kase(from, to, str) {
