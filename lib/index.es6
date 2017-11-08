@@ -1,23 +1,38 @@
 var print = console.log.bind(console)
 
 
-function toStyleStr(obj) {
+var cases = {
+  camel: [/[a-z][A-Z]/, (a, b) => a.toLowerCase() + b.toUpperCase()],
+  kebab: [/.-./, (a, b) => a + '-' + b],
+  snake: [/._./, (a, b) => a + '_' + b],
+}
+
+function kase(from, to, str) {
+  return str.replace(cases[from][0], m => cases[to][1](m[0], m[m.length - 1]))
+}
+
+function toStyleStr(obj, caseFrom, caseTo) {
   if (!obj) return
   var acc = []
 
-  for (var keys = Object.keys(obj), i = 0, k, v; k = keys[i++], v = obj[k], k;)
+  for (var keys = Object.keys(obj), i = 0, k, v; k = keys[i++], v = obj[k], k;) {
+    if (caseFrom && caseTo)
+      k = kase(caseFrom, caseTo, k)
     acc.push(`${k}:${v};`)
+  }
 
   return acc.join(' ')
 }
 
-function fromStyleStr(str) {
+function fromStyleStr(str, caseFrom, caseTo) {
   if (!str) return
   var obj = {}
   var pairs = str.split(/\s*;\s*/)
 
   for (var i = 0, k, v, cur; cur = pairs[i++];) {
     [k, v] = cur.split(/\s*:\s*/, 2)
+    if (caseFrom && caseTo)
+      k = kase(caseFrom, caseTo, k)
     obj[k] = v
   }
 
@@ -62,4 +77,4 @@ function zenhand(tag) {
   return obj
 }
 
-export {toStyleStr, fromStyleStr, zenhand}
+export {kase, toStyleStr, fromStyleStr, zenhand}
