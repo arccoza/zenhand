@@ -25,6 +25,10 @@ let fix = {
     toStr: {
       kebab: 'position:absolute; background-color:#ff0000;',
       camel: 'position:absolute; backgroundColor:#ff0000;',
+    },
+    fromStr: {
+      kebab: 'position:  absolute; background-color:  #ff0000;',
+      camel: 'position:  absolute; backgroundColor:  #ff0000;',
     }
   }
 }
@@ -37,10 +41,29 @@ function Results() {
 
 
 test(`toStyleStr should return a string inline CSS style definition, \
-when supplied with an object with style properties.`, function (t) {
+when supplied with an object with style properties. Also should be able \
+to safely convert between camel-case and kebab-case.`, function (t) {
   t.equal(r = toStyleStr(fix.style.obj.camel), fix.style.toStr.camel)
   t.equal(r = toStyleStr(fix.style.obj.kebab), fix.style.toStr.kebab)
-  t.comment(r)
+  t.equal(r = toStyleStr(fix.style.obj.camel, 'camel', 'kebab'), fix.style.toStr.kebab)
+  t.equal(r = toStyleStr(fix.style.obj.camel, 'camel', 'camel'), fix.style.toStr.camel)
+  t.equal(r = toStyleStr(fix.style.obj.kebab, 'kebab', 'camel'), fix.style.toStr.camel)
+  t.equal(r = toStyleStr(fix.style.obj.kebab, 'kebab', 'kebab'), fix.style.toStr.kebab)
+  // t.comment(r)
+
+  t.end()
+})
+
+test(`fromStyleStr should return an obj with style properties, \
+when supplied with an inline CSS style string. Also should be able \
+to safely convert between camel-case and kebab-case and manage whitespace.`, function (t) {
+  t.deepEqual(r = fromStyleStr(fix.style.fromStr.camel), fix.style.obj.camel)
+  t.deepEqual(r = fromStyleStr(fix.style.fromStr.kebab), fix.style.obj.kebab)
+  t.deepEqual(r = fromStyleStr(fix.style.fromStr.camel, 'camel', 'kebab'), fix.style.obj.kebab)
+  t.deepEqual(r = fromStyleStr(fix.style.fromStr.camel, 'camel', 'camel'), fix.style.obj.camel)
+  t.deepEqual(r = fromStyleStr(fix.style.fromStr.kebab, 'kebab', 'camel'), fix.style.obj.camel)
+  t.deepEqual(r = fromStyleStr(fix.style.fromStr.kebab, 'kebab', 'kebab'), fix.style.obj.kebab)
+  // t.comment(JSON.stringify(r))
 
   t.end()
 })
