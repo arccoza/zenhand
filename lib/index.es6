@@ -2,6 +2,7 @@ var print = console.log.bind(console)
 
 
 function toStyleStr(obj) {
+  if (!obj) return
   var acc = []
 
   for (var keys = Object.keys(obj), i = 0, k, v; k = keys[i++], v = obj[k], k;)
@@ -11,6 +12,7 @@ function toStyleStr(obj) {
 }
 
 function fromStyleStr(str) {
+  if (!str) return
   var obj = {}
   var pairs = str.split(/\s*;\s*/)
 
