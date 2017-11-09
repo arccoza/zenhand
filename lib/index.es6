@@ -81,19 +81,53 @@ function zenhand(tag, {changeStyleCase=true}={}) {
 }
 
 function zenhand2(str, {changeStyleCase=true}={}) {
-  let m = ['[', ']']
-  for (let i = 0, a, b; i = str.indexOf(m[0], i), i != -1; i++) {
-    print(i)
-    if (m[0] == '[')
-      a = i
+  var re = /[#.\[\]]/g
+  var marks = []
+  var find = str => {
+    let i, m, c
+    if (str[re.lastIndex - 1] == '[') {
+      i = str.indexOf(']', re.lastIndex)
+      if (i == -1)
+        i = str.length
+      c = ']'
+      re.lastIndex = i + 1
+    }
     else {
-      b = i
-      print(str.slice(a, b + 1))
+      m = re.exec(str)
+      if (m == null)
+        return m
+      else {
+        i = m.index
+        c = m[0]
+      }
     }
 
-    print(a, b)
-    m = [m[1], m[0]]
+    return [c, i]
   }
+
+  for (let i, m, s, b, r; m = find(str);) {
+    print(m)
+  }
+
+  // for (let i, m, s, b, r; m = re.exec(str);) {
+  // // while (i = re.exec(str)) {
+  //   i = m.index, s = m[0]
+  //   if (b != null) {
+  //     r = [b, i]
+  //     print(': ', str.slice(...r))
+  //   }
+
+  //   // marks.push([m, i])
+  //   print(s, i)
+  //   if (s == '[') {
+  //     [s, i] = (i = str.indexOf(']', i), i != -1 ? [']', i] : [']', str.length - 1])
+  //     ++i
+  //     re.lastIndex = i + 1
+  //     print(s, i)
+  //   }
+
+  //   b = i
+  // }
 }
 
 zenhand2('div#ident.foo.bar[style=background-color:#ff0000;position:absolute;left:calc(1vw - 10px)][data-name=temp]')
