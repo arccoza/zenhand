@@ -80,4 +80,22 @@ function zenhand(tag, {changeStyleCase=true}={}) {
   return obj
 }
 
+function zenhand2(str, {changeStyleCase=true}={}) {
+  let m = ['[', ']']
+  for (let i = 0, a, b; i = str.indexOf(m[0], i), i != -1; i++) {
+    print(i)
+    if (m[0] == '[')
+      a = i
+    else {
+      b = i
+      print(str.slice(a, b + 1))
+    }
+
+    print(a, b)
+    m = [m[1], m[0]]
+  }
+}
+
+zenhand2('div#ident.foo.bar[style=background-color:#ff0000;position:absolute;left:calc(1vw - 10px)][data-name=temp]')
+
 export {kase, toStyleStr, fromStyleStr, zenhand}
