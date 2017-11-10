@@ -80,34 +80,33 @@ function zenhand(tag, {changeStyleCase=true}={}) {
   return obj
 }
 
+var re = /[#.\[\]]/g
+var find = str => {
+  let i, m, c, len = str.length
+  if (str[re.lastIndex - 1] == '[') {
+    i = str.indexOf(']', re.lastIndex)
+    if (i == -1)
+      i = len
+    c = ']'
+    re.lastIndex = i + 1
+  }
+  else if (re.lastIndex >= len)
+    return null
+  else {
+    m = re.exec(str)
+    if (m == null)
+      return m
+    else {
+      i = m.index
+      c = m[0]
+    }
+  }
+
+  return [c, i]
+}
+
 function zenhand2(str, {changeStyleCase=true}={}) {
   let obj = {tag: 'div', attrs: {class: [], style: ''}}
-  var re = /[#.\[\]]/g
-  var marks = []
-
-  var find = str => {
-    let i, m, c, len = str.length
-    if (str[re.lastIndex - 1] == '[') {
-      i = str.indexOf(']', re.lastIndex)
-      if (i == -1)
-        i = len
-      c = ']'
-      re.lastIndex = i + 1
-    }
-    else if (re.lastIndex >= len)
-      return null
-    else {
-      m = re.exec(str)
-      if (m == null)
-        return m
-      else {
-        i = m.index
-        c = m[0]
-      }
-    }
-
-    return [c, i]
-  }
 
   // print(str)
   for (let prv, cur; cur = find(str);) {
