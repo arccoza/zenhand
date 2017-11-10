@@ -81,8 +81,6 @@ to safely convert between camel-case and kebab-case and manage whitespace.`, fun
   t.end()
 })
 
-// TODO: Fix the error that # in a hex colour code creates when parsing
-// the zenhand string.
 test(`fromStyleStr should return an obj with style properties, \
 when supplied with an inline CSS style string. Also should be able \
 to safely convert between camel-case and kebab-case and manage whitespace.`, function (t) {
