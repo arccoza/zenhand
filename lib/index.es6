@@ -190,7 +190,7 @@ function zenhand3(str, {changeStyleCase=true}={}) {
         }
         break
       default:
-        obj.attrs.tag = m[1]
+        obj.tag = m[1]
     }
   }
 
