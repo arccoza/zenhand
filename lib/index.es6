@@ -86,14 +86,16 @@ function zenhand2(str, {changeStyleCase=true}={}) {
   var marks = []
 
   var find = str => {
-    let i, m, c
+    let i, m, c, len = str.length
     if (str[re.lastIndex - 1] == '[') {
       i = str.indexOf(']', re.lastIndex)
       if (i == -1)
-        i = str.length
+        i = len
       c = ']'
       re.lastIndex = i + 1
     }
+    else if (re.lastIndex >= len)
+      return null
     else {
       m = re.exec(str)
       if (m == null)
