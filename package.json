@@ -21,7 +21,8 @@
     "AST",
     "small",
     "tiny",
-    "micro"
+    "micro",
+    "terse"
   ],
   "scripts": {
     "build": "node taskfile.js",
