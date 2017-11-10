@@ -44,7 +44,6 @@ function zenhand(str, {changeStyleCase=true}={}) {
   let obj = {tag: 'div', attrs: {class: [], style: ''}}
 
   for (let m, t; m = re.exec(str);) {
-    // print(m)
     t = m[0][0]
     switch (t) {
       case '#':
@@ -76,7 +75,6 @@ function zenhand(str, {changeStyleCase=true}={}) {
     }
   }
 
-  // print(obj)
   return obj
 }
 
