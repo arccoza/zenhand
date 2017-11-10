@@ -110,51 +110,53 @@ function zenhand2(str, {changeStyleCase=true}={}) {
   // print(str)
   for (let prv, cur; cur = find(str);) {
     // print(cur)
-    prv = prv == null && cur[1] > 0 ? ['tag', -1] : prv
+    prv = prv == null && cur[1] > 0 ? ['', -1] : prv
 
     if (prv != null && prv[0] != ']') {
-      print(prv[0], str.slice(prv[1] + 1, cur[1]))
-      // dice(prv[0], strict.substring(prv[1] + 1, cur[1]), obj)
+      // print(prv[0], str.slice(prv[1] + 1, cur[1]))
+
+      // toks[prv[0]](str.substring(prv[1] + 1, cur[1]), obj)
+      var s = str.substring(prv[1] + 1, cur[1])
+      switch (prv[0]) {
+        case '#':
+          obj.attrs.id = s
+          break
+        case '.':
+          obj.attrs.class.push(s)
+          break
+        case '[':
+          var k = s.toLowerCase(), v = true, i = k.indexOf('=')
+          if (i != -1)
+            [k, v] = [k.substring(0, i), k.substring(i + 1, k.length)]
+
+          // Process style string into obj.
+          switch (k) {
+            case 'style':
+              if (changeStyleCase)
+                var caseFrom = 'kebab', caseTo = 'camel'
+              v = fromStyleStr(v, caseFrom, caseTo)
+              obj.attrs.style = v
+              break
+            case 'class':
+              obj.attrs.class.push(v)
+            default:
+              obj.attrs[k] = v
+          }
+          break
+        default:
+          obj.tag = s
+      }
     }
 
     prv = cur
   }
   re.lastIndex = 0
 
-  print(obj)
+  // print(obj)
   return obj
 }
 
-function dice(k, v, obj) {
-  var changeStyleCase = true
-  // print(k, v)
-  switch (k) {
-    case '#':
-      obj.attrs.id = v
-      break
-    case '.':
-      obj.attrs.class.push(v)
-      break
-    case '[':
-      var key = v, val = true
-      var eqi = key.indexOf('=')
-      if (eqi != -1)
-        [key, val] = [key.substring(0, eqi), key.substring(eqi + 1, key.length)]
 
-      // Process style string into obj.
-      if (key.toLowerCase() == 'style') {
-        if (changeStyleCase)
-          var caseFrom = 'kebab', caseTo = 'camel'
-        val = fromStyleStr(val, caseFrom, caseTo)
-      }
-
-      obj.attrs[key] = val || true
-      break
-    default:
-      obj.tag = v
-  }
-}
-
-zenhand2('div#ident.foo.bar[style=background-color:#ff0000;position:absolute;left:calc(1vw - 10px)][data-name=temp]')
+// zenhand2('div#ident.foo.bar[style=background-color:#ff0000;position:absolute;left:calc(1vw - 10px)][data-name=temp]')
 zenhand = zenhand2
 export {kase, toStyleStr, fromStyleStr, zenhand}
