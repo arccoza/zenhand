@@ -157,7 +157,47 @@ function zenhand2(str, {changeStyleCase=true}={}) {
   return obj
 }
 
+var re3 = /(^.*?(?=[#.\[]))|(?:[#.](.*?)(?=[#.\[]))|(?:\[((.*?)=(.*?))(?=\]))/g
+function zenhand3(str, {changeStyleCase=true}={}) {
+  let obj = {tag: 'div', attrs: {class: [], style: ''}}
+  let t, i
 
-// zenhand2('div#ident.foo.bar[style=background-color:#ff0000;position:absolute;left:calc(1vw - 10px)][data-name=temp]')
+  for (let m; m = re3.exec(str);) {
+    // print(m)
+    t = m[0][0]
+    switch (t) {
+      case '#':
+        obj.attrs.id = m[2]
+        break
+      case '.':
+        obj.attrs.class.push(m[2])
+        break
+      case '[':
+        var [,,,, k, v] = m
+
+        // Process style string into obj.
+        switch (k) {
+          case 'style':
+            if (changeStyleCase)
+              var caseFrom = 'kebab', caseTo = 'camel'
+            v = fromStyleStr(v, caseFrom, caseTo)
+            obj.attrs.style = v
+            break
+          case 'class':
+            obj.attrs.class.push(v)
+          default:
+            obj.attrs[k] = v || true
+        }
+        break
+      default:
+        obj.attrs.tag = m[1]
+    }
+  }
+
+  print(obj)
+}
+
+
+zenhand3('div#ident.foo.bar[style=background-color:#ff0000;position:absolute;left:calc(1vw - 10px)][data-name=temp]')
 zenhand = zenhand2
 export {kase, toStyleStr, fromStyleStr, zenhand}
