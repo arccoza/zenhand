@@ -81,8 +81,10 @@ function zenhand(tag, {changeStyleCase=true}={}) {
 }
 
 function zenhand2(str, {changeStyleCase=true}={}) {
+  let obj = {tag: 'div', attrs: {class: [], style: ''}}
   var re = /[#.\[\]]/g
   var marks = []
+
   var find = str => {
     let i, m, c
     if (str[re.lastIndex - 1] == '[') {
@@ -105,31 +107,54 @@ function zenhand2(str, {changeStyleCase=true}={}) {
     return [c, i]
   }
 
-  for (let i, m, s, b, r; m = find(str);) {
-    print(m)
+  // print(str)
+  for (let prv, cur; cur = find(str);) {
+    // print(cur)
+    prv = prv == null && cur[1] > 0 ? ['tag', -1] : prv
+
+    if (prv != null && prv[0] != ']') {
+      print(prv[0], str.slice(prv[1] + 1, cur[1]))
+      // dice(prv[0], strict.substring(prv[1] + 1, cur[1]), obj)
+    }
+
+    prv = cur
   }
+  re.lastIndex = 0
 
-  // for (let i, m, s, b, r; m = re.exec(str);) {
-  // // while (i = re.exec(str)) {
-  //   i = m.index, s = m[0]
-  //   if (b != null) {
-  //     r = [b, i]
-  //     print(': ', str.slice(...r))
-  //   }
+  print(obj)
+  return obj
+}
 
-  //   // marks.push([m, i])
-  //   print(s, i)
-  //   if (s == '[') {
-  //     [s, i] = (i = str.indexOf(']', i), i != -1 ? [']', i] : [']', str.length - 1])
-  //     ++i
-  //     re.lastIndex = i + 1
-  //     print(s, i)
-  //   }
+function dice(k, v, obj) {
+  var changeStyleCase = true
+  // print(k, v)
+  switch (k) {
+    case '#':
+      obj.attrs.id = v
+      break
+    case '.':
+      obj.attrs.class.push(v)
+      break
+    case '[':
+      var key = v, val = true
+      var eqi = key.indexOf('=')
+      if (eqi != -1)
+        [key, val] = [key.substring(0, eqi), key.substring(eqi + 1, key.length)]
 
-  //   b = i
-  // }
+      // Process style string into obj.
+      if (key.toLowerCase() == 'style') {
+        if (changeStyleCase)
+          var caseFrom = 'kebab', caseTo = 'camel'
+        val = fromStyleStr(val, caseFrom, caseTo)
+      }
+
+      obj.attrs[key] = val || true
+      break
+    default:
+      obj.tag = v
+  }
 }
 
 zenhand2('div#ident.foo.bar[style=background-color:#ff0000;position:absolute;left:calc(1vw - 10px)][data-name=temp]')
-
+zenhand = zenhand2
 export {kase, toStyleStr, fromStyleStr, zenhand}
