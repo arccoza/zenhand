@@ -40,7 +40,7 @@ function fromStyleStr(str, caseFrom, caseTo) {
 }
 
 var re = /(^.*?(?=[#.\[]))|(?:[#.](.*?)(?=[#.\[]))|(?:\[((?:(.*?)=(.*?))|(.*?))(?=\]))/g
-function zenhand3(str, {changeStyleCase=true}={}) {
+function zenhand(str, {changeStyleCase=true}={}) {
   let obj = {tag: 'div', attrs: {class: [], style: ''}}
   let t
 
