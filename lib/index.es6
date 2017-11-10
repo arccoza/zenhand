@@ -157,10 +157,10 @@ function zenhand2(str, {changeStyleCase=true}={}) {
   return obj
 }
 
-var re3 = /(^.*?(?=[#.\[]))|(?:[#.](.*?)(?=[#.\[]))|(?:\[((.*?)=(.*?))(?=\]))/g
+var re3 = /(^.*?(?=[#.\[]))|(?:[#.](.*?)(?=[#.\[]))|(?:\[((?:(.*?)=(.*?))|(.*?))(?=\]))/g
 function zenhand3(str, {changeStyleCase=true}={}) {
   let obj = {tag: 'div', attrs: {class: [], style: ''}}
-  let t, i
+  let t
 
   for (let m; m = re3.exec(str);) {
     // print(m)
@@ -174,6 +174,7 @@ function zenhand3(str, {changeStyleCase=true}={}) {
         break
       case '[':
         var [,,,, k, v] = m
+        k = k == null ? m[6] : k
 
         // Process style string into obj.
         switch (k) {
