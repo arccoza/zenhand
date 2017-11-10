@@ -18,7 +18,10 @@
     "hyperscript",
     "parser",
     "HTML",
-    "AST"
+    "AST",
+    "small",
+    "tiny",
+    "micro"
   ],
   "scripts": {
     "build": "node taskfile.js",
