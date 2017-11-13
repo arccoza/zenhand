@@ -1,5 +1,5 @@
 # Zenhand
-Zenhand parses a shorthand string representing an HTML element, and returns an object describing that element.
+Zenhand parses a shorthand CSS selector like string representing an HTML element, and returns an object describing that element.
 
 ## Example
 ```js
