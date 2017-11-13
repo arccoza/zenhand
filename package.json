@@ -1,7 +1,7 @@
 {
   "name": "zenhand",
   "version": "1.0.0",
-  "description": "Turn a shorthand HTML string into an HTML object.",
+  "description": "Turn a shorthand CSS selector like HTML string into an HTML object.",
   "main": "lib/index",
   "repository": "https://github.com/arccoza/zenhand",
   "bugs": "https://github.com/arccoza/zenhand/issues",
