@@ -27,8 +27,8 @@ let fix = {
       camel: 'position:absolute; backgroundColor:#ff0000;',
     },
     fromStr: {
-      kebab: 'position:  absolute; background-color:  #ff0000;',
-      camel: 'position:  absolute; backgroundColor:  #ff0000;',
+      kebab: 'position :  absolute; background-color :  #ff0000;',
+      camel: 'position :  absolute; backgroundColor :  #ff0000;',
     }
   },
   obj: {
@@ -42,6 +42,19 @@ let fix = {
       },
       id: 'ident',
       'data-name': 'temp'
+    }
+  },
+  objBroken: {
+    tag: 'div',
+    attrs:
+    {
+      class: [ 'foo', 'bar' ],
+      style:
+        { backgroundColor: '#ff0000',
+          position: 'absolute',
+          left: 'calc(1vw - 10px)[data-name=temp'
+        },
+      id: 'ident'
     }
   }
 }
@@ -85,13 +98,14 @@ test(`fromStyleStr should return an obj with style properties, \
 when supplied with an inline CSS style string. Also should be able \
 to safely convert between camel-case and kebab-case and manage whitespace.`, function (t) {
   var r
+
   r = zenhand('div#ident.foo.bar[style=background-color:#ff0000;position:absolute;left:calc(1vw - 10px)][data-name=temp]',
     {changeStyleCase: true})
-
   t.deepEqual(r, fix.obj)
-  console.log(r)
-
-
+  // A case where a closing `]` was left off.
+  r = zenhand('div#ident.foo.bar[style=background-color:#ff0000;position:absolute;left:calc(1vw - 10px)[data-name=temp]',
+    {changeStyleCase: true})
+  t.deepEqual(r, fix.objBroken)
 
   t.end()
 })
