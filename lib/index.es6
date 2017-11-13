@@ -56,8 +56,8 @@ function zenhand(str, {changeStyleCase=true}={}) {
         var [,,,, k, v] = m
         k = k == null ? m[6] : k
 
-        // Process style string into obj.
         switch (k) {
+          // Process style string into obj.
           case 'style':
             if (changeStyleCase)
               var caseFrom = 'kebab', caseTo = 'camel'
@@ -78,7 +78,5 @@ function zenhand(str, {changeStyleCase=true}={}) {
   return obj
 }
 
-
-// zenhand('div#ident.foo.bar[style=background-color:#ff0000;position:absolute;left:calc(1vw - 10px)][data-nametemp]')
 
 export {kase, toStyleStr, fromStyleStr, zenhand}
