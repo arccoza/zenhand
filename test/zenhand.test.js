@@ -32,31 +32,71 @@ let fix = {
     }
   },
   obj: {
-    tag: 'section',
-    attrs: {
-      class: [ 'foo', 'bar' ],
-      style: {
-        backgroundColor: '#ff0000',
-        position: 'absolute',
-        left: 'calc(1vw - 10px)',
-      },
-      id: 'ident',
-      'data-name': 'temp'
-    }
-  },
-  objBroken: {
-    tag: 'section',
-    attrs:
-    {
-      class: [ 'foo', 'bar' ],
-      style:
-        { backgroundColor: '#ff0000',
+    full: {
+      tag: 'section',
+      attrs: {
+        class: [ 'foo', 'bar' ],
+        style: {
+          backgroundColor: '#ff0000',
           position: 'absolute',
-          left: 'calc(1vw - 10px)[data-name=temp'
+          left: 'calc(1vw - 10px)',
         },
-      id: 'ident'
-    }
-  }
+        id: 'ident',
+        'data-name': 'temp'
+      }
+    },
+    brokenAttr: {
+      tag: 'section',
+      attrs:
+      {
+        class: [ 'foo', 'bar' ],
+        style:
+          { backgroundColor: '#ff0000',
+            position: 'absolute',
+            left: 'calc(1vw - 10px)[data-name=temp'
+          },
+        id: 'ident'
+      }
+    },
+    tagOnly: {
+      tag: 'section',
+      attrs: {
+        class: [],
+        style: {},
+      },
+    },
+    idOnly: {
+      tag: 'div',
+      attrs: {
+        class: [],
+        style: {},
+        id: 'ident',
+      },
+    },
+    classOnly: {
+      tag: 'div',
+      attrs: {
+        class: ['foo'],
+        style: {},
+      },
+    },
+    attrOnly: {
+      tag: 'div',
+      attrs: {
+        class: [],
+        style: {},
+        'data-name': 'temp',
+      },
+    },
+    shortAttrOnly: {
+      tag: 'div',
+      attrs: {
+        class: [],
+        style: {},
+        'data-name': true,
+      },
+    },
+  },
 }
 
 function Results() {
@@ -101,11 +141,26 @@ to safely convert between camel-case and kebab-case and manage whitespace.`, fun
 
   r = zenhand('section#ident.foo.bar[style=background-color:#ff0000;position:absolute;left:calc(1vw - 10px)][data-name=temp]',
     {changeStyleCase: true})
-  t.deepEqual(r, fix.obj)
+  t.deepEqual(r, fix.obj.full)
   // A case where a closing `]` was left off.
   r = zenhand('section#ident.foo.bar[style=background-color:#ff0000;position:absolute;left:calc(1vw - 10px)[data-name=temp]',
     {changeStyleCase: true})
-  t.deepEqual(r, fix.objBroken)
+  t.deepEqual(r, fix.obj.brokenAttr)
+  r = zenhand('section',
+    {changeStyleCase: true})
+  t.deepEqual(r, fix.obj.tagOnly)
+  r = zenhand('#ident',
+    {changeStyleCase: true})
+  t.deepEqual(r, fix.obj.idOnly)
+  r = zenhand('.foo',
+    {changeStyleCase: true})
+  t.deepEqual(r, fix.obj.classOnly)
+  r = zenhand('[data-name=temp]',
+    {changeStyleCase: true})
+  t.deepEqual(r, fix.obj.attrOnly)
+  r = zenhand('[data-name]',
+    {changeStyleCase: true})
+  t.deepEqual(r, fix.obj.shortAttrOnly)
 
   t.end()
 })
