@@ -32,7 +32,7 @@ let fix = {
     }
   },
   obj: {
-    tag: 'div',
+    tag: 'section',
     attrs: {
       class: [ 'foo', 'bar' ],
       style: {
@@ -45,7 +45,7 @@ let fix = {
     }
   },
   objBroken: {
-    tag: 'div',
+    tag: 'section',
     attrs:
     {
       class: [ 'foo', 'bar' ],
@@ -99,11 +99,11 @@ when supplied with an inline CSS style string. Also should be able \
 to safely convert between camel-case and kebab-case and manage whitespace.`, function (t) {
   var r
 
-  r = zenhand('div#ident.foo.bar[style=background-color:#ff0000;position:absolute;left:calc(1vw - 10px)][data-name=temp]',
+  r = zenhand('section#ident.foo.bar[style=background-color:#ff0000;position:absolute;left:calc(1vw - 10px)][data-name=temp]',
     {changeStyleCase: true})
   t.deepEqual(r, fix.obj)
   // A case where a closing `]` was left off.
-  r = zenhand('div#ident.foo.bar[style=background-color:#ff0000;position:absolute;left:calc(1vw - 10px)[data-name=temp]',
+  r = zenhand('section#ident.foo.bar[style=background-color:#ff0000;position:absolute;left:calc(1vw - 10px)[data-name=temp]',
     {changeStyleCase: true})
   t.deepEqual(r, fix.objBroken)
 
