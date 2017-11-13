@@ -39,11 +39,12 @@ function fromStyleStr(str, caseFrom, caseTo) {
   return obj
 }
 
-var re = /(^.*?(?=[#.\[]))|(?:[#.](.*?)(?=[#.\[]))|(?:\[((?:(.*?)=(.*?))|(.*?))(?=\]))/g
+var re = /(^.*?(?=[#.\[]|$))|(?:[#.](.*?)(?=[#.\[]|$))|(?:\[((?:(.*?)=(.*?))|(.*?))(?=\]))/g
 function zenhand(str, {changeStyleCase=true}={}) {
-  let obj = {tag: 'div', attrs: {class: [], style: ''}}
+  let obj = {tag: 'div', attrs: {class: [], style: {}}}
 
   for (let m, t; m = re.exec(str);) {
+    if (m.index === re.lastIndex) re.lastIndex++
     t = m[0][0]
     switch (t) {
       case '#':
