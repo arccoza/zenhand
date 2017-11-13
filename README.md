@@ -25,3 +25,44 @@ __output:__
 or
 
 `yarn add zenhand`
+
+## API
+The module also exports two helper functions; `toStyleStr` and `fromStyleStr`.
+
+### toStyleStr(obj, [fromCase, toCase])
+Convert an object representation of CSS styles into a string, optionally converting property case.
+
+```js
+var {toStyleStr, zenhand} = require('zenhand')
+// Input.
+var obj = {
+  position: 'absolute',
+  'backgroundColor': '#ff0000',
+}
+
+console.log(toStyleStr(obj, 'camel', 'kebab'))
+
+// Output.
+'position:absolute; background-color:#ff0000;'
+```
+
+Supports `camel` for camelCase, `kebab` for kebab-case, and `snake` for snake_case.
+
+### fromStyleStr(str, [fromCase, toCase])
+Convert a str representation of CSS styles into an object, optionally converting property case.
+
+```js
+var {fromStyleStr, zenhand} = require('zenhand')
+// Input.
+var str = 'position:absolute; background-color:#ff0000;'
+
+console.log(fromStyleStr(str, 'kebab', 'camel'))
+
+// Output.
+{
+  position: 'absolute',
+  'backgroundColor': '#ff0000',
+}
+```
+
+Supports `camel` for camelCase, `kebab` for kebab-case, and `snake` for snake_case.
