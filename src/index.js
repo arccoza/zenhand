@@ -1,6 +1,3 @@
-var print = console.log.bind(console)
-
-
 var cases = {
   camel: [/[a-z][A-Z]/, (a, b) => a.toLowerCase() + b.toUpperCase()],
   kebab: [/.-./, (a, b) => a + '-' + b.toLowerCase()],
@@ -80,4 +77,4 @@ function zenhand(str, {changeStyleCase=true}={}) {
 }
 
 
-export {kase, toStyleStr, fromStyleStr, zenhand}
+module.exports = {kase, toStyleStr, fromStyleStr, zenhand}

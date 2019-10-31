@@ -1,4 +1,4 @@
-var {zenhand, toStyleStr} = require('./lib/index')
+var {zenhand, toStyleStr} = require('./src/index')
 var print = console.log.bind(console)
 
 var start = process.hrtime()
