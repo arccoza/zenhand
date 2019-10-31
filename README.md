@@ -1,4 +1,7 @@
-# Zenhand
+[travis]:       https://travis-ci.org/arccoza/zenhand
+[travis-img]:   https://travis-ci.org/arccoza/zenhand.svg
+
+# Zenhand [![Travis Build Status][travis-img]][travis]
 Zenhand parses a shorthand CSS selector like string representing an HTML element, and returns an object describing that element.
 
 ## Example

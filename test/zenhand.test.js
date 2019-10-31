@@ -1,7 +1,7 @@
 const test = require('tape')
 const print = console.log.bind(console)
 const tapDiff = require('tap-diff')
-const {toStyleStr, fromStyleStr, zenhand} = require('../lib/index')
+const {toStyleStr, fromStyleStr, zenhand} = require('../src/index')
 
 
 if(!module.parent) {
